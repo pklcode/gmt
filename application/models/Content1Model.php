@@ -1,66 +1,49 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Content1Model extends CI_Model {
-  // Fungsi untuk menampilkan semua data siswa
-  public function view(){
+  // Fungsi untuk menampilkan semua data gambar
+  public function tampil(){
     return $this->db->get('content1')->result();
   }
   
-  // Fungsi untuk menampilkan data siswa berdasarkan NIS nya
-  public function view_by($id_content1){
-    $this->db->where('id_content1', $id_content1);
-    return $this->db->get('content1')->row();
+  // Fungsi untuk melakukan proses upload file
+  public function upload(){
+    $config['upload_path'] = './gambar/';
+    $config['allowed_types'] = 'jpg|png|jpeg';
+    $config['max_size']  = '2048';
+    $config['remove_space'] = TRUE;
+  
+    $this->load->library('upload', $config); // Load konfigurasi uploadnya
+    if($this->upload->do_upload('input_gambar')){ // Lakukan upload dan Cek jika proses upload berhasil
+      // Jika berhasil :
+      $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+      return $return;
+    }else{
+      // Jika gagal :
+      $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+      return $return;
+    }
   }
   
-  // Fungsi untuk validasi form tambah dan ubah
-  public function validation($mode){
-    $this->load->library('form_validation'); // Load library form_validation untuk proses validasinya
-    
-    // Tambahkan if apakah $mode save atau update
-    // Karena ketika update, NIS tidak harus divalidasi
-    // Jadi NIS di validasi hanya ketika menambah data siswa saja
-    if($mode == "save")
-      $this->form_validation->set_rules('input_id_content1', 'No', 'required|numeric|max_length[11]');
-    
-    $this->form_validation->set_rules('input_nama', 'Nama', 'required|max_length[50]');
-    $this->form_validation->set_rules('input_tanggal', 'Tanggal', 'required');
-    $this->form_validation->set_rules('input_keterangan', 'keterangan', 'required');
-    $this->form_validation->set_rules('input_gambar', 'Gambar', 'required');
-      
-    if($this->form_validation->run()) // Jika validasi benar
-      return TRUE; // Maka kembalikan hasilnya dengan TRUE
-    else // Jika ada data yang tidak sesuai validasi
-      return FALSE; // Maka kembalikan hasilnya dengan FALSE
-  }
-  
-  // Fungsi untuk melakukan simpan data ke tabel siswa
-  public function save(){
+  // Fungsi untuk menyimpan data ke database
+  public function save($upload){
     $data = array(
-      "id_content1" => $this->input->post('input_id_content1'),
-      "nama" => $this->input->post('input_nama'),
-      "tanggal" => $this->input->post('input_tanggal'),
-      "keterangan" => $this->input->post('input_keterangan'),
-      "gambar" => $this->input->post('input_gambar')
+      'nama'=>$this->input->post('nama'),
+      'tanggal'=>$this->input->post('tanggal'),
+      'keterangan'=>$this->input->post('keterangan')
+
     );
     
-    $this->db->insert('content1', $data); // Untuk mengeksekusi perintah insert data
+    $this->db->insert('content1', $data);
   }
-  
-  // Fungsi untuk melakukan ubah data siswa berdasarkan NIS siswa
-  public function edit($id_content1){
-    $data = array(
-      "nama" => $this->input->post('input_nama'),
-      "tanggal" => $this->input->post('input_tanggal'),
-      "keterangan" => $this->input->post('input_keterangan'),
-      "gambar" => $this->input->post('input_gambar')
-    );
-    
-    $this->db->where('id_content1', $id_content1);
-    $this->db->update('content1', $data); // Untuk mengeksekusi perintah update data
+  public function hapus_data($where,$id_content){
+    $this->db->where($where);
+    $this->db->delete($id_content);
   }
-  
-  // Fungsi untuk melakukan menghapus data siswa berdasarkan NIS siswa
-  public function delete($id_content1){
-    $this->db->where('id_content1', $id_content1);
-    $this->db->delete('content1'); // Untuk mengeksekusi perintah delete data
+  public function edit_data($where,$table){   
+  return $this->db->get_where($table,$where);
+}
+function update_data($where,$data,$table){
+    $this->db->where($where);
+    $this->db->update($table,$data);
   }
 }
