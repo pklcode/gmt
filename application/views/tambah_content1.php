@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="form-panel">
                 <h4 class="mb"><i class="fa fa-angle-right"></i> Form content1</h4>
-                    <form class="form-horizontal style-form" enctype="multipart/form-data" action="<?php echo base_url(). 'crud/tambah_aksi'; ?>" method="post">
+                    <form class="form-horizontal style-form" enctype="multipart/form-data" action="<?php echo base_url(). 'Content1/tambah_aksi'; ?>" method="post">
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Nama</label>
                               <div class="col-sm-10">
@@ -26,8 +26,13 @@
                               </div>
                           </div>
                           <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">Gambar</label>
+                                <div class="col-md-10">
+                                <input type="file" name="gambar"></div>
+                          </div>
+                          <div class="form-group">
                               <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" value="upload" class="btn btn-primary">Update</button>
                               </div>
                           </div>
                     </form> 
