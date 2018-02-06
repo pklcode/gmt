@@ -6,22 +6,8 @@ class Content1Model extends CI_Model {
   }
   
   // Fungsi untuk melakukan proses upload file
-  public function upload(){
-    $config['upload_path'] = './gambar/';
-    $config['allowed_types'] = 'jpg|png|jpeg';
-    $config['max_size']  = '2048';
-    $config['remove_space'] = TRUE;
-  
-    $this->load->library('upload', $config); // Load konfigurasi uploadnya
-    if($this->upload->do_upload('input_gambar')){ // Lakukan upload dan Cek jika proses upload berhasil
-      // Jika berhasil :
-      $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
-      return $return;
-    }else{
-      // Jika gagal :
-      $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
-      return $return;
-    }
+  public function input_data($data,$table){
+    $this->db->insert($table,$data);
   }
   
   // Fungsi untuk menyimpan data ke database
@@ -35,15 +21,15 @@ class Content1Model extends CI_Model {
     
     $this->db->insert('content1', $data);
   }
-  public function hapus_data($where,$id_content){
-    $this->db->where($where);
-    $this->db->delete($id_content);
-  }
   public function edit_data($where,$table){   
   return $this->db->get_where($table,$where);
-}
-function update_data($where,$data,$table){
+  }
+  public function update_data($where,$data,$table){
     $this->db->where($where);
     $this->db->update($table,$data);
   }
+  public function hapus_data($where,$table){
+  $this->db->where($where);
+  $this->db->delete($table);
+}
 }
