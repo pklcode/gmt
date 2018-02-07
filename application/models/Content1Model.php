@@ -9,13 +9,14 @@ class Content1Model extends CI_Model {
   public function input_data($data,$table){
     $this->db->insert($table,$data);
   }
-  
+
   // Fungsi untuk menyimpan data ke database
   public function save($upload){
     $data = array(
       'nama'=>$this->input->post('nama'),
       'tanggal'=>$this->input->post('tanggal'),
-      'keterangan'=>$this->input->post('keterangan')
+      'keterangan'=>$this->input->post('keterangan'),
+      'gambar' => $upload['file']['gambar'],
 
     );
     
