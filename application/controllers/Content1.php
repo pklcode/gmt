@@ -26,13 +26,26 @@ class Content1 extends CI_Controller {
     $nama = $this->input->post('nama');
     $tanggal = $this->input->post('tanggal');
     $keterangan = $this->input->post('keterangan');
- 
     $data = array(
       'nama' => $nama,
       'tanggal' => $tanggal,
       'keterangan' => $keterangan
       );
-    $this->Content1Model->input_data($data,'content1');
+        $this->Content1Model->input_data($data,'content1');
+    $config['upload_path']          = './gambar/';
+    $config['allowed_types']        = 'gif|jpg|png';
+    $config['max_size']             = 100;
+    $config['max_width']            = 1024;
+    $config['max_height']           = 768;
+ 
+    $this->load->library('upload', $config);
+ 
+    if ( ! $this->upload->do_upload('gambar')){
+      $error = array('error' => $this->upload->display_errors());
+      $this->load->view('content1', $error);
+    }else{
+      $data = array('upload_data' => $this->upload->data());
+    }
     redirect('index');
   }
   public function edit($id_content1){
