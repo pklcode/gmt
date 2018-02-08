@@ -8,6 +8,19 @@
                 <h4 class="mb"><i class="fa fa-angle-right"></i> Form content1</h4>
                     <form class="form-horizontal style-form" enctype="multipart/form-data" action="<?php echo base_url(). 'Content1/tambah_aksi'; ?>" method="post">
                           <div class="form-group">
+                            <label class="col-sm-2 col-sm-2 control-label">Id Category</label>
+                            <div class="col-md-3">
+                              <select name="id_category" class="form-control">
+                                <option value="1">Berita</option>
+                                <option value="2">Traveling</option>
+                                <option value="3">Hiking</option>
+                                <option value="4">Kuliner</option>
+                                <option value="5">Tips$Trik</option>
+                                <option value="6">Stories</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Nama</label>
                               <div class="col-sm-10">
                                   <input type="text" name="nama" class="form-control" placeholder="Enter Nama">
@@ -15,7 +28,7 @@
                           </div>
                           <div class="form-group">
                               <label class="col-sm-2 col-sm-2 control-label">Tanggal</label>
-                              <div class="col-sm-10">
+                              <div class="col-md-4">
                                   <input type="date" name="tanggal" class="form-control" placeholder="Enter Nama">
                               </div>
                           </div>
