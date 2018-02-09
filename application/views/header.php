@@ -10,18 +10,18 @@
     <title>Admin GMT</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?php echo base_url(); ?>/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet">
     <!--external css-->
-    <link href="<?php echo base_url(); ?>/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 	<!-- DATA TABLES -->
-    <link href="<?php echo base_url(); ?>/assets/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>assets/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
         
     <!-- Custom styles for this template -->
-    <link href="<?php echo base_url(); ?>/assets/css/style.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>/assets/css/style-responsive.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
+    <link href="<?php echo base_url(); ?>assets/css/style-responsive.css" rel="stylesheet">
 
-    <link href="<?php echo base_url(); ?>/assets/css/table-responsive.css" rel="stylesheet">
-    <script type="text/javascript" src="<?php echo base_url(); ?>/assets/ckeditor/ckeditor/ckeditor.js"></script>
+    <link href="<?php echo base_url(); ?>assets/css/table-responsive.css" rel="stylesheet">
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/ckeditor/ckeditor/ckeditor.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -47,7 +47,7 @@
             
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="login.html">Logout</a></li>
+                    <li><a class="logout" href="login">Logout</a></li>
             	</ul>
             </div>
         </header>
@@ -62,40 +62,14 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-                  <p class="centered"><a href="profile.html"><img src="<?php echo base_url(); ?>/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+                  <p class="centered"><a href="profile.html"><img src="<?php echo base_url(); ?>assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
                   <h5 class="centered">Kiteleee</h5>
-                    
-                  <li class="mt">
-                      <a class="" href="content1">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Content1</span>
-                      </a>
-                  </li>
-                  <li class="mt">
-                      <a class="" href="content2">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Content2</span>
-                      </a>
-                  </li>
-                  <li class="mt">
-                      <a class="" href="pages">
-                          <i class="fa fa-dashboard"></i>
-                          <span>pages</span>
-                      </a>
-                  </li>
-                  <li class="mt">
-                      <a class="" href="category">
-                          <i class="fa fa-dashboard"></i>
-                          <span>category</span>
-                      </a>
-                  </li>
-                  <li class="mt">
-                      <a class="" href="feedback">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Feedback</span>
-                      </a>
-                  </li>
-
+                    <?php
+                    $main_menu = $this->db->get_where('pages',array('status'=>2))->result();
+                    foreach ($main_menu as $main) {
+                      echo"<li>".anchor($main->link,"<i class='".$main->ikon."'></i>".$main->menu)."</li>";
+                    }
+                    ?>
               </ul>
           </div>
       </aside>
