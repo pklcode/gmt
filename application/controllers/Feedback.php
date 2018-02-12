@@ -3,12 +3,15 @@ class Feedback extends CI_Controller {
   
   public function __construct(){
     parent::__construct();
-    
+    if(!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
     $this->load->model('FeedbackModel');
     $this->load->helper('url');
   }
   
-  public function index3(){
+  public function index(){
     $this->load->view('header');
 
     $data['feedback'] = $this->FeedbackModel->tampil();
@@ -32,12 +35,12 @@ class Feedback extends CI_Controller {
       'saran' => $saran
       );
         $this->FeedbackModel->input_data($data,'feedback');
-    redirect('index3');
+    redirect('feedback');
   }
   public function hapus($id_feedback){
     $where = array('id_feedback' => $id_feedback);
     $this->FeedbackModel->hapus_data($where,'feedback');
-    redirect('index3');
+    redirect('feedback');
   }
 
 }
