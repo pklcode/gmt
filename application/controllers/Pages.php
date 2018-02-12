@@ -3,12 +3,15 @@ class Pages extends CI_Controller {
   
   public function __construct(){
     parent::__construct();
-    
+    if(!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
     $this->load->model('PagesModel');
     $this->load->helper('url');
   }
   
-  public function index2(){
+  public function index(){
     $this->load->view('header');
 
     $data['pages'] = $this->PagesModel->tampil();
@@ -32,7 +35,7 @@ class Pages extends CI_Controller {
       'status' => $status
       );
         $this->PagesModel->input_data($data,'pages');
-    redirect('index2');
+    redirect('pages');
   }
   public function edit($id_pages){
   $this->load->view('header');
@@ -59,12 +62,12 @@ class Pages extends CI_Controller {
   );
  
   $this->PagesModel->update_data($where,$data,'pages');
-  redirect('index2');
+  redirect('pages');
 }
   public function hapus($id_pages){
     $where = array('id_pages' => $id_pages);
     $this->PagesModel->hapus_data($where,'pages');
-    redirect('index2');
+    redirect('pages');
   }
 
 }
