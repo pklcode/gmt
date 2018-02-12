@@ -3,7 +3,10 @@ class Content2 extends CI_Controller {
   
   public function __construct(){
     parent::__construct();
-    
+    if(!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
     $this->load->model('Content2Model');
     $this->load->helper('url');
   }
@@ -91,21 +94,6 @@ class Content2 extends CI_Controller {
     'id_content2' => $id_content2
   );
  
-  $this->Content2Model->update_data($where,$data,'content2');
-  $config['upload_path']          = './gambar';
-    $config['allowed_types']        = 'gif|jpg|png';
-    $config['max_size']             = 500;
-    $config['max_width']            = 1024;
-    $config['max_height']           = 768;
- 
-    $this->load->library('upload', $config);
- 
-    if ( ! $this->upload->do_upload('gambar')){
-      $error = array('error' => $this->upload->display_errors());
-      $this->load->view('content2', $error);
-    }else{
-      $data = array('upload_data' => $this->upload->data());
-    }
   redirect('content2');
 }
   public function hapus($id_content2){
