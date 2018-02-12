@@ -3,12 +3,15 @@ class Category extends CI_Controller {
   
   public function __construct(){
     parent::__construct();
-    
+    if(!$this->session->userdata('username'))
+    {
+      redirect('login');
+    }
     $this->load->model('CategoryModel');
     $this->load->helper('url');
   }
   
-  public function index4(){
+  public function index(){
     $this->load->view('header');
 
     $data['category'] = $this->CategoryModel->tampil();
@@ -28,7 +31,7 @@ class Category extends CI_Controller {
       'title' => $title
       );
         $this->CategoryModel->input_data($data,'category');
-    redirect('index4');
+    redirect('category');
   }
   public function edit($id_category){
   $this->load->view('header');
@@ -55,7 +58,7 @@ class Category extends CI_Controller {
   public function hapus($id_category){
     $where = array('id_category' => $id_category);
     $this->CategoryModel->hapus_data($where,'category');
-    redirect('index4');
+    redirect('category');
   }
 
 }
