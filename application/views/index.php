@@ -10,8 +10,8 @@ include "header.php";
                 
             <div class="row section-header has-bottom-sep light-sep" data-aos="fade-up">
                 <div class="col-full">
-                    <h3 class="subhead">Recent Works</h3>
-                    <h1 class="display-2 display-2--light">We love what we do, check out some of our latest works</h1>
+                    <h3 class="subhead">kegiatan yang akan dilaksanakan</h3>
+                    <h1 class="display-2 display-2--light">berikut kegiatan yang akan kami selenggarakan</h1>
                 </div>
             </div> <!-- end section-header -->
 
