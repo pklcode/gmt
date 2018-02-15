@@ -38,11 +38,11 @@ class Content1 extends CI_Controller {
       'gambar'=>$_FILES['gambar']['name']
       );
         $this->Content1Model->input_data($data,'content1');
-    $config['upload_path']          = './gambar';
+   $config['upload_path']          = './gambar';
     $config['allowed_types']        = 'gif|jpg|png';
-    $config['max_size']             = 100;
-    $config['max_width']            = 1024;
-    $config['max_height']           = 768;
+    $config['max_size']             = 4000;
+    $config['max_width']            = 4024;
+    $config['max_height']           = 4068;
  
     $this->load->library('upload', $config);
  
@@ -82,6 +82,21 @@ class Content1 extends CI_Controller {
     'id_content1' => $id_content1
   );
  
+  $this->Content1Model->update_data($where,$data,'content1');
+  $config['upload_path']          = './gambar';
+    $config['allowed_types']        = 'gif|jpg|png';
+    $config['max_size']             = 4000;
+    $config['max_width']            = 4024;
+    $config['max_height']           = 4068;
+ 
+    $this->load->library('upload', $config);
+ 
+    if ( ! $this->upload->do_upload('gambar')){
+      $error = array('error' => $this->upload->display_errors());
+      $this->load->view('content1', $error);
+    }else{
+      $data = array('upload_data' => $this->upload->data());
+    }
   redirect('content1');
 }
   public function hapus($id_content1){
