@@ -30,7 +30,9 @@ class Content2 extends CI_Controller {
     $status = $this->input->post('status');
     $no_telpon = $this->input->post('no_telpon');
     $v_m = $this->input->post('v_m');
-    $sosmed = $this->input->post('sosmed');
+    $facebook = $this->input->post('facebook');
+    $twitter = $this->input->post('twitter');
+    $instagram = $this->input->post('instagram');
     $ttl = $this->input->post('ttl');
     $id_category = $this->input->post('id_category');
     $data = array(
@@ -38,7 +40,9 @@ class Content2 extends CI_Controller {
       'status' => $status,
       'no_telpon' => $no_telpon,
       'v_m' => $v_m,
-      'sosmed' => $sosmed,
+      'facebook' => $facebook,
+      'twitter' => $twitter,
+      'instagram' => $instagram,
       'ttl' => $ttl,
       'id_category' => $id_category,
       'gambar'=>$_FILES['gambar']['name']
@@ -46,9 +50,9 @@ class Content2 extends CI_Controller {
         $this->Content2Model->input_data($data,'content2');
     $config['upload_path']          = './gambar';
     $config['allowed_types']        = 'gif|jpg|png';
-    $config['max_size']             = 100;
-    $config['max_width']            = 1024;
-    $config['max_height']           = 768;
+    $config['max_size']             = 4000;
+    $config['max_width']            = 4024;
+    $config['max_height']           = 4068;
  
     $this->load->library('upload', $config);
  
@@ -74,7 +78,9 @@ class Content2 extends CI_Controller {
   $status = $this->input->post('status');
   $no_telpon = $this->input->post('no_telpon');
   $v_m = $this->input->post('v_m');
-  $sosmed = $this->input->post('sosmed');
+  $facebook = $this->input->post('facebook');
+  $twitter = $this->input->post('twitter');
+  $instagram = $this->input->post('instagram');
   $ttl = $this->input->post('ttl');
   $id_category = $this->input->post('id_category');
  
@@ -84,7 +90,9 @@ class Content2 extends CI_Controller {
     'status' => $status,
     'no_telpon' => $no_telpon,
     'v_m' => $v_m,
-    'sosmed' => $sosmed,
+    'facebook' => $facebook,
+    'twitter' => $twitter,
+    'instagram' => $instagram,
     'ttl' => $ttl,
     'id_category' => $id_category,
     'gambar'=>$_FILES['gambar']['name']
@@ -93,7 +101,21 @@ class Content2 extends CI_Controller {
   $where = array(
     'id_content2' => $id_content2
   );
+ $this->Content2Model->update_data($where,$data,'content2');
+  $config['upload_path']          = './gambar';
+    $config['allowed_types']        = 'gif|jpg|png';
+    $config['max_size']             = 100;
+    $config['max_width']            = 1024;
+    $config['max_height']           = 768;
  
+    $this->load->library('upload', $config);
+ 
+    if ( ! $this->upload->do_upload('gambar')){
+      $error = array('error' => $this->upload->display_errors());
+      $this->load->view('content1', $error);
+    }else{
+      $data = array('upload_data' => $this->upload->data());
+    }
   redirect('content2');
 }
   public function hapus($id_content2){
